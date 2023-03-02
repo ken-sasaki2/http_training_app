@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
@@ -61,6 +62,22 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void get() async {
+    const lat = '35.65138';
+    const lon = '139.63670';
+    const key = 'aa50ce0598c22de20f75cf3ea31ac312';
+
+    const domain = 'https://api.openweathermap.org';
+    const pass = '/data/2.5/onecall';
+    const query = '?lat=$lat&lon=$lon&exclude=daily&lang=ja&appid=$key';
+
+    var url = Uri.parse(domain + pass + query);
+    debugPrint('url: $url');
+    var response = await http.get(url);
+    debugPrint('statusCode: ${response.statusCode}');
+    debugPrint('response: ${response.body}');
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -106,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: get,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
