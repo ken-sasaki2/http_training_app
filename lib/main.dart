@@ -51,7 +51,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String? weatherText;
 
   Future<WeatherModel?>get() async {
     const lat = '35.65138';
@@ -84,20 +83,13 @@ class _MyHomePageState extends State<MyHomePage> {
       future: get(),
       builder: (BuildContext context, AsyncSnapshot<WeatherModel?> snapshot) {
         if (snapshot.hasData) {
-          debugPrint('処理完了');
-          debugPrint('data:${snapshot.data}');
-
           var data = snapshot.data;
-          weatherText = data?.description;
-
           return Scaffold(
             body: Center(
-                child: Text('現在の天気は$weatherTextです！')
+                child: Text('現在の天気は${data?.description}です！')
             )
           );
         } else {
-          debugPrint('処理中...');
-
           return const Scaffold(
               body: Center(
                   child: Text('処理中...')
